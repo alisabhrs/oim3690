@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  color: #111111;
+  background-color: #ffffff;
+  line-height: 1.6;
+}
+
+/* Navigation */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 5%;
+}
+
+.logo {
+  color: #111111;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  color: #111111;
+  text-decoration: none;
+}
+
+/* Main sections */
+.hero,
+.about-section,
+.experience-section,
+.contact-section {
+  padding: 80px 5%;
+}
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero h1 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 1;
+  margin: 30px 0;
+}
+
+.about-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.about-content h2,
+.about-text {
+  flex: 1;
+}
+
+.experience-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 30px;
+  padding: 24px 0;
+  border-top: 1px solid #cccccc;
+}
+
+.contact-section h2 {
+  font-size: clamp(2.5rem, 7vw, 6rem);
+}
+
+.contact-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.social-links {
+  display: flex;
+  gap: 20px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 5%;
+}
+
+/* Phone layout */
+@media (max-width: 700px) {
+  .navbar,
+  .about-content,
+  .contact-footer,
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero,
+  .about-section,
+  .experience-section,
+  .contact-section {
+    padding: 50px 20px;
+  }
+
+  .experience-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .social-links {
+    flex-direction: column;
+  }
+}
