@@ -4,91 +4,579 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello!</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
+        /*
+          "Feature", "Kensington", and "Obviously" are licensed foundry fonts
+          (not hosted on Google Fonts). Add @font-face rules below pointing to
+          your licensed font files to activate them; until then, each stack
+          falls back to Instrument Serif / system fonts.
+        */
+        @font-face {
+            font-family: 'Feature';
+            src: local('Feature');
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Kensington';
+            src: local('Kensington');
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obviously';
+            src: local('Obviously');
+            font-display: swap;
+        }
+
+        :root {
+            --teal: #AFEEEE;
+            --yellow: #FDEFB2;
+            --brown: #4A2A0D;
+            --paper: #FBF9F4;
+            --font-display: 'Kensington', 'Instrument Serif', serif;
+            --font-heading: 'Feature', 'Instrument Serif', serif;
+            --font-body: 'Obviously', 'Manrope', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 0 20px;
-            line-height: 1.6;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 300;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            color: var(--brown);
+            background: var(--paper);
+            letter-spacing: 0.01em;
         }
-        h1 {
-            color: #2c3e50;
+
+        /* ---------- sidebar ---------- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 48px 28px;
+            background: var(--yellow);
+            border-right: 1px solid var(--brown);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 20;
+            transition: transform 0.35s ease;
         }
-        .greeting {
-            font-size: 1.3em;
+        body.sidebar-hidden .sidebar {
+            transform: translateX(-100%);
         }
-        .tags span {
-            display: inline-block;
-            background: #eef2f7;
-            border-radius: 4px;
-            padding: 4px 10px;
-            margin: 4px 4px 4px 0;
+        body.sidebar-hidden .content {
+            margin-left: 0;
         }
-        footer {
-            margin-top: 40px;
+
+        .sidebar-close {
+            position: fixed;
+            top: 16px;
+            left: 272px;
+            z-index: 21;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--yellow);
+            border: 1px solid var(--brown);
+            border-radius: 50%;
+            color: var(--brown);
             font-size: 0.9em;
-            color: #666;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, left 0.35s ease, opacity 0.35s ease;
         }
+        .sidebar-close:hover {
+            background: var(--brown);
+            color: var(--yellow);
+            transform: rotate(90deg);
+        }
+        body.sidebar-hidden .sidebar-close {
+            left: 12px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 0;
+            border: 2px solid var(--brown);
+            background: var(--teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--brown);
+            opacity: 0.7;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .sidebar-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .sidebar h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5em;
+            font-weight: 500;
+            color: #2AA9A9;
+            margin: 0 0 12px;
+        }
+        .sidebar p {
+            font-size: 0.85em;
+            color: var(--brown);
+            opacity: 0.85;
+            text-align: justify;
+        }
+
+        .content {
+            margin-left: 260px;
+            padding: 0 32px 100px;
+            transition: margin-left 0.35s ease;
+        }
+
+        /* ---------- nav ---------- */
         nav {
-            background: #2c3e50;
-            margin: -40px -20px 30px;
-            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: #2AA9A9;
+            backdrop-filter: blur(6px);
+            margin: 0 -32px 70px;
+            padding: 26px 32px;
+            border-bottom: 1px solid rgba(45, 19, 0, 0.15);
+            transition: padding 0.3s ease;
+        }
+        nav.scrolled {
+            padding: 12px 32px;
         }
         nav ul {
             list-style: none;
             display: flex;
-            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
             margin: 0;
             padding: 0;
+            transition: gap 0.3s ease;
         }
-        nav a {
-            color: #fff;
+        nav.scrolled ul {
+            gap: 20px;
+        }
+        nav.scrolled a,
+        nav.scrolled button {
+            font-size: 0.68em;
+        }
+        nav a,
+        nav button {
+            position: relative;
+            color: var(--yellow);
             text-decoration: none;
-            font-weight: bold;
+            font: inherit;
+            font-size: 0.78em;
+            line-height: 1;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 0 0 4px;
+            margin: 0;
+            background: none;
+            border: none;
+            appearance: none;
+            -webkit-appearance: none;
+            vertical-align: middle;
+            cursor: pointer;
         }
-        nav a:hover {
-            text-decoration: underline;
+        nav a::after,
+        nav button::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: var(--yellow);
+            transition: width 0.35s ease;
+        }
+        nav a:hover::after,
+        nav a:focus-visible::after,
+        nav button:hover::after,
+        nav button:focus-visible::after {
+            width: 100%;
+        }
+        #sidebar-toggle::after {
+            height: 0.5px;
+            width: 0;
+            bottom: -3px;
+        }
+        #sidebar-toggle:hover::after,
+        #sidebar-toggle:focus-visible::after {
+            width: 100%;
+        }
+
+        #sidebar-toggle {
+            display: inline-flex;
+            align-items: center;
+            padding: 0 0 4px;
+            position: relative;
+            top: 2px;
+        }
+        #sidebar-toggle .btn-avatar {
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            object-fit: cover;
+            opacity: 0;
+            transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+        }
+        nav.scrolled #sidebar-toggle .btn-text {
+            display: none;
+        }
+        nav.scrolled #sidebar-toggle .btn-avatar {
+            width: 30px;
+            height: 30px;
+            opacity: 1;
+        }
+
+        /* ---------- headings & text ---------- */
+        h1, h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--brown);
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3.4em;
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+        h1 em {
+            font-style: italic;
+            color: #2AA9A9;
+        }
+
+        .eyebrow {
+            font-size: 0.75em;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--brown);
+            opacity: 0.65;
+            margin: 0 0 14px;
+        }
+
+        .greeting {
+            font-size: 1.08em;
+            max-width: 58ch;
+            color: var(--brown);
+            opacity: 0.8;
+        }
+
+        h2 {
+            font-size: 1.9em;
+            margin-top: 64px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(45, 19, 0, 0.15);
+        }
+
+        /* ---------- reveal on scroll ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---------- lists ---------- */
+        ul.list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        ul.list li {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(45, 19, 0, 0.1);
+            font-size: 0.98em;
+            transition: padding-left 0.3s ease, color 0.3s ease;
+        }
+        ul.list li::before {
+            content: "\2605";
+            display: inline-block;
+            font-size: 1em;
+            line-height: 1;
+            color: var(--teal);
+            -webkit-text-stroke: 1px var(--brown);
+            paint-order: stroke fill;
+            transition: color 0.3s ease, transform 0.5s ease;
+        }
+        ul.list li:hover {
+            padding-left: 34px;
+            color: #2AA9A9;
+        }
+        ul.list li:hover::before {
+            color: var(--yellow);
+            transform: rotate(180deg);
+        }
+
+        /* ---------- tags marquee ---------- */
+        .tags {
+            overflow: hidden;
+            border-top: 1px solid rgba(45, 19, 0, 0.15);
+            border-bottom: 1px solid rgba(45, 19, 0, 0.15);
+            padding: 18px 0;
+            mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+        }
+        .tags-track {
+            display: flex;
+            width: max-content;
+            gap: 18px;
+            animation: marquee 16s linear infinite;
+        }
+        .tags:hover .tags-track {
+            animation-play-state: paused;
+        }
+        .tags span {
+            display: inline-block;
+            flex: none;
+            background: transparent;
+            border: 1px solid var(--brown);
+            border-radius: 999px;
+            padding: 7px 18px;
+            font-size: 0.78em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            cursor: default;
+        }
+        .tags span:hover {
+            background: var(--brown);
+            color: var(--paper);
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ---------- footer ---------- */
+        footer {
+            margin-top: 90px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(45, 19, 0, 0.15);
+        }
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--brown);
+            font-size: 0.8em;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .home-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--brown);
+            transform: scaleX(1);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .home-link:hover .arrow {
+            transform: translateX(-6px);
+        }
+        .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        /* ---------- custom cursor ---------- */
+        body {
+            cursor: none;
+        }
+        #cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 22px;
+            height: 22px;
+            pointer-events: none;
+            z-index: 999;
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: spin 6s linear infinite;
+            transition: transform 0.2s ease;
+        }
+        #cursor-dot polygon {
+            fill: var(--yellow);
+            stroke: var(--brown);
+            stroke-width: 6;
+            stroke-linejoin: round;
+            transition: fill 0.2s ease;
+        }
+        #cursor-dot.is-active {
+            transform: translate(-50%, -50%) scale(1.6);
+        }
+        #cursor-dot.over-sidebar polygon {
+            fill: var(--teal);
+        }
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @media (hover: none) {
+            body { cursor: auto; }
+            #cursor-dot { display: none; }
         }
     </style>
 </head>
 <body>
+    <svg id="cursor-dot" viewBox="0 0 100 100">
+        <polygon points="50,0 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35" />
+    </svg>
+
+    <aside class="sidebar">
+        <div class="sidebar-photo">
+            <!-- swap this for <img src="your-photo.jpg" alt="Alisa Hanabaharis"> -->
+            Your Photo
+        </div>
+        <h3>Alisa Hanabaharis</h3>
+        <p>Hi, I'm a junior at Babson College from Jakarta, Indonesia, concentrating in Marketing and Tech Entrepreneurship. Welcome to my little corner of the web!</p>
+    </aside>
+
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+
+    <div class="content">
     <nav>
         <ul>
-            <li><a href="#top">Home</a></li>
-            <li><a href="#working-on">Working On</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li>
+                <button id="sidebar-toggle">
+                    <span class="btn-text">About Me</span>
+                    <!-- swap this src for your logo or face png -->
+                    <img class="btn-avatar" src="profile.png" alt="About Me">
+                </button>
+            </li>
             <li><a href="#interests">Interests</a></li>
             <li><a href="#tags">Tags</a></li>
-            <li><a href="index.html">Homepage</a></li>
         </ul>
     </nav>
 
-    <h1 id="top">Hello, world!</h1>
-    <p class="greeting">Welcome to my little corner of the web. This page is where I test out new HTML ideas before adding them to my main site.</p>
+    <p class="eyebrow reveal">Personal &middot; Notes</p>
+    <h1 id="top" class="reveal">Hello, <em>world.</em></h1>
+    <p class="greeting reveal">Welcome to my little corner of the web. This page is where I test out new HTML ideas before adding them to my main site.</p>
 
-    <h2 id="working-on">What I'm working on</h2>
-    <ul>
+    <h2 id="projects" class="reveal">Projects</h2>
+    <ul class="list reveal">
         <li>Learning HTML and web basics</li>
         <li>Building my personal homepage</li>
         <li>Experimenting with small projects</li>
     </ul>
 
-    <h2 id="interests">My Interests</h2>
-    <ul>
+    <h2 id="interests" class="reveal">My Interests</h2>
+    <ul class="list reveal">
         <li>Web development</li>
         <li>Artificial intelligence</li>
         <li>Photography</li>
     </ul>
 
-    <h2 id="tags">Tags</h2>
-    <p class="tags">
-        <span>#learning</span>
-        <span>#webdev</span>
-        <span>#oim3690</span>
-    </p>
+    <h2 id="tags" class="reveal">Tags</h2>
+    <div class="tags reveal">
+        <div class="tags-track">
+            <span>#learning</span>
+            <span>#webdev</span>
+            <span>#oim3690</span>
+            <span>#learning</span>
+            <span>#webdev</span>
+            <span>#oim3690</span>
+        </div>
+    </div>
 
     <footer>
-        <p><a href="index.html">&larr; Back to homepage</a></p>
+        <a href="index.html" class="home-link"><span class="arrow">&larr;</span> Back to homepage</a>
     </footer>
+    </div>
+
+    <script>
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        revealEls.forEach((el) => observer.observe(el));
+
+        // custom cursor: star follows the mouse and grows over links
+        const dot = document.getElementById('cursor-dot');
+
+        window.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, span, button').forEach((el) => {
+            el.addEventListener('mouseenter', () => dot.classList.add('is-active'));
+            el.addEventListener('mouseleave', () => dot.classList.remove('is-active'));
+        });
+
+        // star turns teal while hovering the sidebar
+        const sidebarEl = document.querySelector('.sidebar');
+        sidebarEl.addEventListener('mouseenter', () => dot.classList.add('over-sidebar'));
+        sidebarEl.addEventListener('mouseleave', () => dot.classList.remove('over-sidebar'));
+
+        // toggle the sidebar open/closed
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+        sidebarToggle.addEventListener('click', () => {
+            document.body.classList.toggle('sidebar-hidden');
+        });
+        sidebarClose.addEventListener('click', () => {
+            document.body.classList.add('sidebar-hidden');
+        });
+
+        // shrink the nav bar once the page is scrolled
+        const navEl = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            navEl.classList.toggle('scrolled', window.scrollY > 40);
+        });
+    </script>
 </body>
 </html>
