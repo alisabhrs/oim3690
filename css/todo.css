@@ -118,3 +118,21 @@ body {
 #todo-clear-completed:hover {
   text-decoration: underline;
 }
+
+
+/* Edit Task Button */
+
+.todo-edit {
+  background-color: #e8f0fe;
+  color: #174a6e;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.todo-edit:hover {
+  background-color: #d2e3fc;
+}

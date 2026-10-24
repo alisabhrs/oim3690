@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Playlist</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            box-sizing: border-box;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #174a6e;
+            text-align: center;
+        }
+
+        p {
+            color: #666;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f4f7f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #174a6e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>My Playlist</h1>
+        <p>Some of my favorite songs</p>
+
+        <!-- JavaScript adds songs here -->
+        <ul id="playlist"></ul>
+    </div>
+
+    <script src="js/playlist.js"></script>
+
+</body>
+</html>
