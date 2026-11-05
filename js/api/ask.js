@@ -7,6 +7,17 @@ export default {
     // The prompt your page sent in the request body.
     const { prompt } = await request.json();
 
+    // The longest prompt you accept, in tokens. There is no setting for this in
+    // the API, so estimate about four characters per token and turn away
+    // anything longer before it costs you anything.
+    const maxInputTokens = 2000;
+    if (typeof prompt !== "string" || prompt.length > maxInputTokens * 4) {
+      return Response.json(
+        { error: `Prompt is too long (limit is about ${maxInputTokens} tokens).` },
+        { status: 400 }
+      );
+    }
+
     const response = await fetch("https://openrouter.ai/api/v1/responses", {
       method: "POST",
       headers: {
@@ -20,7 +31,7 @@ export default {
         model: "deepseek/deepseek-v4.1-flash-1017",
         // The longest answer you pay for, in tokens (about three quarters of a
         // word each). A longer answer is cut off at this point.
-        max_output_tokens: 1000,
+        max_output_tokens: 2000,
         input: prompt
       })
     });
