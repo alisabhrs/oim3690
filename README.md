@@ -25,6 +25,16 @@ Fresh'd is a kitchen inventory website designed to help users keep track of thei
 GitHub Repository:
 https://github.com/alisabhrs/mini-project-2
 
+## Mini Project 3: Fresh'd — What Can I Make?
+
+Fresh'd now finds real recipes from TheMealDB API using the food in my inventory, and calculates how much of each recipe I already have.
+
+GitHub Repository:
+https://github.com/alisabhrs/mini-project-3
+
+Live Site:
+https://alisabhrs.github.io/mini-project-3/
+
 ## Class Exercises
 
 - Contact Form (`contact.html`)
