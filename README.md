@@ -42,6 +42,9 @@ https://alisabhrs.github.io/mini-project-3/
 - Temperature Converter (`converter.html`)
 - Member Discount (`discount.html`)
 - Playlist (`playlist.html`)
+- Message Board (`post-message.html`)
+- Fetch Something Fun (`fetch-fun.html`)
+- Ask AI (`ai-chat.html`): https://oim3690-delta.vercel.app/ai-chat.html
 
 ## Weekly Notes
 

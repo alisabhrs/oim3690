@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch Something Fun</title>
+</head>
+<body>
+  <h1>Fetch Something Fun</h1>
+  <p>Get a random dog photo, or press Surprise Me for a dog or a piece of advice.</p>
+  <button id="dogBtn">Get a Dog</button>
+  <button id="surpriseBtn">Surprise Me</button>
+  <p id="status"></p>
+  <img id="dog" alt="A random dog" style="max-width: 300px; display: none;">
+
+  <script>
+    const dogBtn = document.querySelector('#dogBtn');
+    const surpriseBtn = document.querySelector('#surpriseBtn');
+    const statusEl = document.querySelector('#status');
+    const dogImg = document.querySelector('#dog');
+
+    // Dog CEO API: returns { message: "<image URL>", status: "success" }.
+    async function getDog() {
+      statusEl.textContent = 'Loading...';
+      dogImg.style.display = 'none';
+      try {
+        const response = await fetch('https://dog.ceo/api/breeds/image/random');
+        if (!response.ok) {
+          throw new Error(`Request failed: ${response.status}`);
+        }
+        const data = await response.json();
+        // The field this page reads is .message (an image URL).
+        dogImg.src = data.message;
+        dogImg.style.display = 'block';
+        statusEl.textContent = '';
+      } catch (error) {
+        statusEl.textContent = 'Could not fetch a dog: ' + error.message;
+        console.error(error);
+      }
+    }
+
+    // Advice Slip API: returns { slip: { id: 1, advice: "..." } }.
+    async function getAdvice() {
+      statusEl.textContent = 'Loading...';
+      dogImg.style.display = 'none';
+      try {
+        // cache: 'no-store' stops the browser reusing the last advice.
+        const response = await fetch('https://api.adviceslip.com/advice', { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`Request failed: ${response.status}`);
+        }
+        const data = await response.json();
+        // The field this page reads is .slip.advice.
+        statusEl.textContent = data.slip.advice;
+      } catch (error) {
+        statusEl.textContent = 'Could not fetch advice: ' + error.message;
+        console.error(error);
+      }
+    }
+
+    dogBtn.addEventListener('click', getDog);
+
+    // Surprise Me picks one of the two APIs at random.
+    surpriseBtn.addEventListener('click', () => {
+      if (Math.random() < 0.5) {
+        getDog();
+      } else {
+        getAdvice();
+      }
+    });
+  </script>
+</body>
+</html>
