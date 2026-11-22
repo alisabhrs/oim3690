@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Buzzword Meter",
+  "version": "1.1",
+  "description": "Counts the buzzwords on job postings at jobs.lever.co, and explains text you select using my Ask AI function.",
+  "content_scripts": [
+    {
+      "matches": ["https://jobs.lever.co/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Buzzword Meter"
+  },
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://oim3690-delta.vercel.app/*"]
+}

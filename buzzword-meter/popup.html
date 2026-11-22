@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 320px; margin: 0; padding: 14px; font: 14px/1.45 system-ui, sans-serif; color: #1d1d1f; }
+    h1 { font-size: 16px; margin: 0 0 6px; }
+    p.hint { margin: 0 0 10px; color: #555; font-size: 13px; }
+    button { width: 100%; padding: 10px; border: 0; border-radius: 8px; background: #1a56db; color: #fff; font: 600 14px system-ui, sans-serif; cursor: pointer; }
+    button:disabled { background: #9aa7bd; cursor: wait; }
+    #selected { margin: 10px 0 0; padding: 8px; background: #f3f4f6; border-radius: 6px; font-size: 12px; color: #444; max-height: 70px; overflow: auto; display: none; }
+    #answer { margin-top: 10px; white-space: pre-wrap; max-height: 260px; overflow: auto; }
+    #answer.error { color: #b42318; }
+  </style>
+</head>
+<body>
+  <h1>Ask About What You Selected</h1>
+  <p class="hint">Select some text on the page, then click the button.</p>
+  <button id="ask">Explain my selection</button>
+  <div id="selected"></div>
+  <div id="answer"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
