@@ -27,7 +27,10 @@ const BUZZWORDS = [
   "thought leader",
   "mission-driven",
   "high-impact",
-  "ambiguity"
+  "ambiguity",
+  "proactive",
+  "impactful",
+  "growth mindset"
 ];
 
 function escapeRegex(text) {

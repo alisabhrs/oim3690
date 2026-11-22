@@ -6,7 +6,7 @@ const API_URL = "https://oim3690-delta.vercel.app/api/ask";
 // What the popup asks the model to do with the selected text.
 // Change this line to make it yours.
 const INSTRUCTION =
-  "Explain the following text to a first-year college student in two sentences:";
+  "This is a requirement from a job posting. In two sentences, explain in plain English what it actually means, and say whether a college student applying for an internship could realistically meet it:";
 
 const button = document.getElementById("ask");
 const selectedBox = document.getElementById("selected");
